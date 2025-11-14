@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interest — Subwindow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Boldonse&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Darker+Grotesque:wght@300..900&family=Do+Hyeon&family=DotGothic16&family=Hammersmith+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Rowdies:wght@300;400;700&family=Sanchez:ital@0;1&family=Savate:ital,wght@0,200..900;1,200..900&family=Sue+Ellen+Francisco&display=swap" rel="stylesheet">    
+    <style>
+      :root{ --ink:#2b2626; --bar:#f3ef6b; --paper:#ffdcdc; --accent_1:#c3b1ff; --accent_2: #ffb566; --card:#f2ccff }
+      *{ box-sizing:border-box; }
+      html,body{ height:100%; overflow:hidden; background: transparent;}
+      body{ margin:0; background:transparent; color:var(--ink); padding:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+      .window{ 
+        height:100%; display:flex; flex-direction:column; border:2px solid #cfc6a6; background:var(--paper); overflow:hidden; border-radius: 30px 0 10px 10px; 
+      }
+      .titlebar{ position:relative; display:flex; align-items:center; justify-content:flex-start; background:var(--bar); height:35px; padding:0 10px; }
+      .titlebar h1{ font-family:"Agdasima", system-ui; font-size:40px; font-weight:60; margin-left:8px; }
+      h2 { padding:5px; background: var(--accent_2); margin:0 2px 0 2px; width: 25%; height: 20px; font-family:"Hammersmith One", system-ui; font-size:15px; color: #fff; font-weight:60; letter-spacing:.5px; }
+
+      .clock{ font-family: "DM Mono", system-ui; font-size:11px; background: transparent; padding:2px 8px; border-radius:4px; margin-left:15px; white-space: pre-line; line-height:1.2; }
+      .close-btn{ width:32px; height:32px; border:0; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; position:absolute; right:6px; top:1px; }
+      .close-btn img{ width:18px; height:18px; display:block; }
+      .content { padding: 36px 10px 10px; flex: 1; display: flex; flex-direction: column; gap: 10px; position: relative; overflow-y: auto; scroll-behavior: smooth; }
+
+      .section-right { display: flex; justify-content: flex-end; }
+      .card { background: var(--card); border-radius: 12px; padding: 10px; line-height: 1.6; font-family: "DM Mono", system-ui; font-size: 7px; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.05); width: 80%; height: auto; overflow: visible; box-sizing: border-box; }
+      
+      .container { display: flex; justify-content: space-between; align-items: self-start; flex-wrap: wrap; background-color: transparent; width: 400px; height: 80px; padding: 0 0 0 20px; gap: 15px; }
+      .container img { display: block; width: 55px; height: 73px; object-fit: cover; border-radius: 2px; }
+
+      .container-right { display: flex; flex-direction: row; flex-wrap: nowrap; align-items: self-start; justify-content: flex-end; gap: 15px; background-color: transparent; width: 100%; max-width: 1000px; height: auto; padding: 6px 8px; box-sizing: border-box; }
+      .container-right .item { display: flex; flex-direction: column; align-items: flex-start; min-width: 70px; width: auto; }
+      .container-right figure { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+      .container-right img { display: block; width: 55px; height: 55px; object-fit: cover; border-radius: 2px; }
+      .container-right figcaption { margin: 0; font-family:"DotGothic16", system-ui; font-size:5px; line-height: 1.1; white-space: pre-line; }
+
+    </style>
+  </head>
+  <body>
+    <div class="window">
+      
+      <div class="titlebar">
+        <h1>Interest</h1>
+        <div class="clock" id="clock">GMT +7; Jakarta\n--:-- --</div>
+        <button class="close-btn" aria-label="Close"><img src="images/positive/exit.png" alt="Close" /></button>
+      </div>
+      
+      <div class="content">
+        <h2>5 Fav. Movies</h2>
+        <div class="card">
+            <i>A story where it deeply troubled by the state of the confusing world but has fiercely held onto a core of hope and a belief in what is truly beautiful even if it's fragile.</i>
+        </div>
+        <div class="container">
+           <div class="item">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdCDiGjaAVYgcHBlGOTX52DGGU-NNWDhIYcg&s" alt="">
+          </div>
+          <div class="item">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsn88oRVe_lwFaAlgMXZ0kaodBIxz8s1x2cw&s" alt="">
+          </div>
+          <div class="item">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6gMTs91JLPBNfCSWO9rIIzTiElz95on-jPw&s" alt="">
+          </div>
+          <div class="item">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQBAy4qLFWfpl78TOg-OVGm6RG4MBT32bb6g&s" alt="">
+          </div>
+          <div class="item">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpIIv2gv-3acZxOxIixsaZiwi-95K62OaiaQ&s" alt="">
+          </div>
+       </div>
+        
+        <div class="section-right">
+            <h2>5 Fav. Songs</h2>
+        </div>
+        <div class="section-right">
+          <div class="card">
+              <i>A song where it starts with distance, moves through a fight or deep wound, expands to an artistic perspective, and ends with a conscious call for communal joy to conquer the darkness.</i>
+          </div>
+        </div>
+        <div class="section-right">
+          <div class="container-right">
+            <div class="item">
+                <figure>
+                  <a href="https://www.youtube.com/watch?v=pFD5Ab0qM88" target="_blank">
+                    <img src="https://cdn-images.dzcdn.net/images/cover/ddc05fa63225ef0af8b17cad1ad54bfb/500x500.jpg" alt="">
+                    <figcaption class="caption">
+                    遠いこの街で 
+                    - Naomi Kaitani
+                    </figcaption>
+                  </a>
+                </figure>
+              </div>
+              <div class="item">
+                <figure>
+                  <a href="https://www.youtube.com/watch?v=CiCWbfjf8Tw" target="_blank">
+                    <img src="https://ogre.natalie.mu/media/news/music/2014/1104/music_fighter.jpg?impolicy=thumb_fit&width=160&height=160" alt="">
+                    <figcaption class="caption">
+                    ファイター 
+                    - BUMP OF CHICKEN
+                    </figcaption>
+                  </a>
+                </figure>
+              </div>
+              <div class="item">
+                <figure>
+                  <a href="https://www.youtube.com/watch?v=YPrs3DqraWM" target="_blank">
+                    <img src="https://f4.bcbits.com/img/a3874459819_16.jpg" alt="">
+                    <figcaption class="caption">
+                    The Place Where He 
+                    Inserted the Blade
+                    - Black Country, New Road
+                    </figcaption>
+                  </a>
+                </figure>
+              </div>
+              <div class="item">
+                <figure>
+                  <a href="https://www.youtube.com/watch?v=nA0UOiVM1u0" target="_blank">
+                    <img src="https://m.media-amazon.com/images/I/61bVvMnPgXL._UF1000,1000_QL80_.jpg" alt="">
+                    <figcaption class="caption">
+                    Come On! Feel the 
+                    Illinoise! ..
+                    - Sufjan Stevens
+                    </figcaption>
+                  </a>
+                </figure>
+              </div>  
+              <div class="item">
+                <figure>
+                  <a href="https://www.youtube.com/watch?v=K1RepjSXQV8" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/id/thumb/e/ec/Perunggu_-_Memorandum.jpg/250px-Perunggu_-_Memorandum.jpg" alt="">
+                    <figcaption class="caption">
+                    Pastikan Riuh 
+                    Akhiri Malammu
+                    - Perunggu
+                    </figcaption>
+                  </a>
+                </figure>
+              </div>
+          </div>
+        </div>
+    </div>
+    <script src="close.js"></script>
+    <script src="clock.js"></script>
+    <script src="cards.js"></script>
+  </body>
+</html>

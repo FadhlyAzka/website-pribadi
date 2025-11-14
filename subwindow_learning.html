@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning Material — Subwindow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Boldonse&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Darker+Grotesque:wght@300..900&family=Do+Hyeon&family=DotGothic16&family=Hammersmith+One&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Rowdies:wght@300;400;700&family=Sanchez:ital@0;1&family=Savate:ital,wght@0,200..900;1,200..900&family=Sue+Ellen+Francisco&display=swap" rel="stylesheet">    
+    <style>
+      :root{ --ink:#2b2626; --bar:#f3ef6b; --paper:#ffdcdc; --accent_1:#c3b1ff; --accent_2: #ffb566; --card:#f2ccff; --icon-size: 64px; --h-gap: 15px; --row-offset: 40px; }
+      *{ box-sizing:border-box; }
+      html,body{ height:100%; overflow:hidden; background: transparent;}
+      body{ margin:0; background:transparent; color:var(--ink); padding:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+      .window{ 
+        height:100%; display:flex; flex-direction:column; border:2px solid #cfc6a6; background:var(--paper); overflow:hidden; border-radius: 30px 0 10px 10px; 
+      }
+      .titlebar{ position:relative; display:flex; align-items:center; justify-content:flex-start; background:var(--bar); height:35px; padding:0 10px; }
+      .titlebar h1{ font-family:"Agdasima", system-ui; font-size:40px; font-weight:60; margin-left:8px; }
+      h2 { padding:5px; background: var(--accent_2); margin:0 2px 0 2px; width: 30%; height: 20px; font-family:"Hammersmith One", system-ui; font-size:15px; color: #fff; font-weight:60; letter-spacing:.5px; }
+      h2 r{ color: #ea5959 }
+      h2 y{ color: #eae659}
+
+      .clock{ font-family: "DM Mono", system-ui; font-size:11px; background: transparent; padding:2px 8px; border-radius:4px; margin-left:15px; white-space: pre-line; line-height:1.2; }
+      .close-btn{ width:32px; height:32px; border:0; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; position:absolute; right:6px; top:1px; }
+      .close-btn img{ width:18px; height:18px; display:block; }
+      .content { padding: 36px 10px 10px; flex: 1; display: flex; flex-direction: column; gap: 10px; position: relative; overflow-y: auto; scroll-behavior: smooth; }
+
+      .section-right { display: flex; justify-content: flex-end; }
+      .card { background: var(--card); border-radius: 12px; padding: 10px; line-height: 1.6; font-family: "DM Mono", system-ui; font-size: 7px; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.05); width: 80%; height: auto; overflow: visible; box-sizing: border-box; }
+      
+      .container{ width: 100%; max-width: 1000px; box-sizing: border-box; padding: 6px 8px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; background: transparent;
+      }
+      .container .row { display: flex; gap: var(--h-gap); justify-content: flex-start; align-items: center; margin: 0; padding: 0; }
+      .container .row.row--offset { transform: translateX(var(--row-offset)); }
+      .container .item{ margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; min-width: 0; }
+      .container .item img{ width: var(--icon-size); height: var(--icon-size); object-fit: cover; border-radius: 50%; display: block; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+      .container-right { flex-direction: row; flex-wrap: nowrap; align-items: self-start; gap: 15px; background-color: transparent; width: 100%; max-width: 1000px; height: auto; padding: 6px 8px; box-sizing: border-box; }
+      .container-right .row { display: flex; gap: var(--h-gap); justify-content: flex-end; align-items: center; margin: 0; padding: 0; }
+      .container-right .row.row--offset { transform: translateX(-35px); }
+      .container-right .item{ margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; min-width: 0; }
+      .container-right .item img{ width: var(--icon-size); height: var(--icon-size); object-fit: cover; border-radius: 50%; display: block; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+    </style>
+  </head>
+  <body>
+    <div class="window">
+      
+      <div class="titlebar">
+        <h1>Learning Material</h1>
+        <div class="clock" id="clock">GMT +7; Jakarta\n--:-- --</div>
+        <button class="close-btn" aria-label="Close"><img src="images/positive/exit.png" alt="Close" /></button>
+      </div>
+      
+      <div class="content">
+        <h2>You<r>Tube</r> <y>Channel</y></h2>
+        <div class="card">
+            Tontonan untuk memahami Matematika, Fisika, hingga <i>Machine Learning</i> secara fundamental serta mengikuti perkembangan ilmu pengetahuan yang <i>up-to-date.</i>
+        </div>
+        <div class="container">
+          <div class="row row--top">
+            <figure class="item"><a href="https://www.youtube.com/@QuantaScienceChannel" target="_blank"><img src="https://yt3.googleusercontent.com/Kz6zpxMLaKVZeqMel-Q9Udy1KBbWhj58p7Ro5xxPHsVgzCHmXjc0gOK28_fOrlgeGwyDEVE2zg=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@3blue1brown" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/AIdro_nFzZFPLxPZRHcE3SSwzdrbuWqfoWYwLAu0_2iO6blQYAU=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@veritasium" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYtBzHvnr8XUrcqbXaw7YBV4tfUfBUjzvQ3Q&s" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@MindYourDecisions" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/AIdro_nwGU65HHIY-c9XNKcj3doVPfm6BvhNX01pwvI5Ax7wmS8=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@numberphile" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/AIdro_nmbQSAGKk1OZCBBf_sPJqLoFfYOVDWRDzALocBjGQtHeI=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+          </div>
+
+          <div class="row row--offset">
+            <figure class="item"><a href="https://www.youtube.com/@ScinceClicEN" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/AIdro_npe9hjG5LPQM0AR98D3fQmho_yLDA6piPpfnRFjeyW0g=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@WelchLabsVideo" target="_blank"><img src="https://yt3.googleusercontent.com/RFCKJgHcSbN14fHQn-Xhwzch3xgbwxh15edMdiYZbslxMrU-Y-gFEOPGdIy3Cot0oVAr8E0Dow=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@PrimerBlobs" target="_blank"><img src="https://yt3.googleusercontent.com/YicJ3lAVdXC5jI7SA7mnX7pPoULN2Gfgh_S4IgDPDPjLaeTx1vWiQeh-reCty2uWuoVK70K5Lg=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@AndrejKarpathy" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/AIdro_nDvyq2NoPL626bk1IbxQ94SfQsD-B0qgZchghtQNkLWoEz=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@RumahEditor" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-4K-_e6TabMa5gpPhJLDDTD9EjywYuKwdbA&s" alt=""></a></figure>
+          </div>
+        </div>
+        
+        <div class="section-right">
+          <div class="card">
+            Tontonan premium untuk menyaksikan video esai mengenai kisah, misteri & sejarah dunia dengan gaya <i>full-3D animation</i> disertai <i>storytelling</i> yang kohesif.
+          </div>
+        </div>
+        <div class="section-right">
+          <div class="container-right">
+            <div class="row row--top">
+              <figure class="item"><a href="https://www.youtube.com/@sisilainfilm" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEsu4dWJfADxO45uDbHfnVIG_h1KpsJ8QadA&s" alt=""></a></figure>
+              <figure class="item"><a href="https://www.youtube.com/@AtriumExplores" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkefYDN_2KRmxbjwaXIvBiMrhFPeM-8-l3RQ&s" alt=""></a></figure>
+              <figure class="item"><a href="https://www.youtube.com/@solveyoutube" target="_blank"><img src="https://yt3.googleusercontent.com/JEuV7PwF9QMaadW6Zr8lJrec2APa-breLlQY1Ufnz8TCpUJ3jxbEXgIQFxYbz00aKlf_RLSlftI=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+              <figure class="item"><a href="https://www.youtube.com/@hoogyoutube" target="_blank"><img src="https://yt3.googleusercontent.com/sZBlnPBDaAztZjM1pwfvOJjj0L0lLckM2fP3NwOf3ZhiLo7OsS0PbH2jzaBkSXvpJtgeC2YZ=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+              <figure class="item"><a href="https://www.youtube.com/@LEMMiNO" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/AIdro_n9UULHnAEc-yMg6URdgtNDvUqeu-SXR3WMV2ObydPnLg=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            </div>
+
+            <div class="row row--offset">
+              <figure class="item"><a href="https://www.youtube.com/@ThePresentPast_" target="_blank"><img src="https://yt3.googleusercontent.com/uJSlTdf5cw-yXyyybanTDgpW3ds2-4ooOHr3eUDWxVi5E6kQQ7VxrJXgCn5kU2GmuOAn_YC1=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+              <figure class="item"><a href="https://www.youtube.com/@neoexplains" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/AIdro_mtg1eqq0jyDgYV2Mf2eJTlYIqbism_th4mRhWeWB9cFM4=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+              <figure class="item"><a href="https://www.youtube.com/@primalspace" target="_blank"><img src="https://yt3.googleusercontent.com/q017GQLRJxtaqzkoe88AedTRHCaM3YsBH67guULisfjSDTPQvwrqWb4jV146eTbcAxc_Yihv=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+              <figure class="item"><a href="https://www.youtube.com/@tern-tv" target="_blank"><img src="https://yt3.googleusercontent.com/7Pztg8I_KJBkX9XhWnQRQNmulnqCI6KEkSpWX5qYuzZiSoDv4QT7MiEu4XcCQQNBPcrUX1ko=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          Tontonan santai untuk menyaksikan hiburan video esai dokumentasi berisi kumpulan sejarah <i>random</i> apapun, baik dari individu tertentu, game, movie, <i>TV series</i>, dll.
+        </div>
+        <div class="container">
+          <div class="row row--top">
+            <figure class="item"><a href="https://www.youtube.com/@SummoningSalt" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/AIdro_n8NSEiNfCuno3JKW2ggFYNvxVUKPg2jzf2O_7W-pmkAv4=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@therealchoopo" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/AIdro_kgNXMQhr48V3PwDl8F_RmeUlZc0qo6RhC65dN7NVPuawg=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@Droomp" target="_blank"><img src="https://yt3.googleusercontent.com/ytc/AIdro_n_Hi3kzziOsIb9KxKxYklKRVtZhEMShJEmvp0fmDNyF5g=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+          </div>
+
+          <div class="row row--offset">
+            <figure class="item"><a href="https://www.youtube.com/@ThatGuyGlen" target="_blank"><img src="https://yt3.googleusercontent.com/OALJNt1r21qzJH84qp2XMtUIwSGAn6YvfwMug0BjMyGqNx1IS3zzjG2-hN-Uw4j5AEDlkJa5M_o=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+            <figure class="item"><a href="https://www.youtube.com/@NoclipDocs" target="_blank"><img src="https://yt3.googleusercontent.com/A8ssxYyzbFeIOrrWOYVux7sJKMv728Oos_LgibZzLWDwBlbVnb4oyZi4J1t1d_0t7j2oLLMf=s900-c-k-c0x00ffffff-no-rj" alt=""></a></figure>
+          </div>
+        </div>
+    </div>
+    <script src="close.js"></script>
+    <script src="clock.js"></script>
+    <script src="cards.js"></script>
+  </body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio — Hero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Boldonse&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Rowdies:wght@300;400;700&family=Sanchez:ital@0;1&family=Savate:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <main class="canvas">
+      <aside class="left-rail">
+
+        <button class="rail-btn rail-btn--sun" aria-label="Theme">
+            <img src="images/positive/p_sun.png" alt="positive sun" class="rail-btn-image" />
+        </button>
+
+        <button class="rail-btn rail-btn--volume" aria-label="Sound">
+            <img src="images/positive/volume_active.png" alt="volume active" class="rail-btn-image" />
+        </button>
+
+        <div class="callout">
+            <img src="images/command_arrow_text.png" alt="command arrow text" class="callout-image" />
+        </div>
+
+        <button class="rail-btn rail-btn--menu" aria-label="Menu">
+            <img src="images/positive/p_menu.png" alt="positive menu" class="rail-btn-image" />
+        </button>
+
+        <button class="rail-btn-small rail-btn--work is-hidden" aria-label="Work">
+            <img src="images/positive/p_work.png" alt="positive work" class="rail-btn-image" />
+        </button>
+        <button class="rail-btn-small rail-btn--other is-hidden" aria-label="Other">
+            <img src="images/positive/p_other.png" alt="positive other" class="rail-btn-image" />
+        </button>
+        
+        <button class="rail-btn rail-btn--account" aria-label="About">
+            <img src="images/positive/p_account.png" alt="positive account" class="rail-btn-image" />
+        </button>
+        
+        <button class="rail-btn-small rail-btn--learning is-hidden" aria-label="Learning">
+            <img src="images/positive/p_learning.png" alt="positive work" class="rail-btn-image" />
+        </button>
+        <button class="rail-btn-small rail-btn--interest is-hidden" aria-label="Interest">
+            <img src="images/positive/p_interest.png" alt="positive other" class="rail-btn-image" />
+        </button>
+        <button class="rail-btn-small rail-btn--contact is-hidden" aria-label="Contact">
+            <img src="images/positive/p_contact.png" alt="positive other" class="rail-btn-image" />
+        </button>
+
+      </aside>
+
+      <section class="hero">
+        <p class="eyebrow">Let's look at <u>my</u></p>
+        <h1 class="title">PORTOFOLIO</h1>
+      </section>
+    </main>
+
+    <div class="overlay right-side" id="subwindowOverlay" aria-hidden="true">
+      <div class="overlay-backdrop"></div>
+      <div class="overlay-body">
+        <iframe class="subwindow-frame" src="subwindow_menu.html" title="Sub Window"></iframe>
+      </div>
+    </div>
+
+    <div class="overlay left-side" id="subwindowOverlayPersonal" aria-hidden="true">
+      <div class="overlay-backdrop"></div>
+      <div class="overlay-body">
+        <iframe class="subwindow-frame subwindow-frame-personal" src="subwindow_account.html" title="Personal Sub Window"></iframe>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        var volumeBtn = document.querySelector('.rail-btn--volume');
+        var menuBtn = document.querySelector('.rail-btn--menu');
+        var workBtn = document.querySelector('.rail-btn--work');
+        var otherBtn = document.querySelector('.rail-btn--other');
+        var accountBtn = document.querySelector('.rail-btn--account');
+        var learningBtn = document.querySelector('.rail-btn--learning');
+        var interestBtn = document.querySelector('.rail-btn--interest');
+        var contactBtn = document.querySelector('.rail-btn--contact');
+
+        // Overlays & frames (two independent groups)
+        var overlay = document.getElementById('subwindowOverlay');
+        var frame = document.querySelector('.subwindow-frame');
+        var overlayPersonal = document.getElementById('subwindowOverlayPersonal');
+        var framePersonal = document.querySelector('.subwindow-frame-personal');
+        var callout = document.querySelector('.callout');
+
+        // Map conceptual left/right windows to existing overlays
+        var leftWindow = overlayPersonal;
+        var rightWindow = overlay;
+        var menuGroup = [menuBtn, workBtn, otherBtn];
+        var personalGroup = [accountBtn, learningBtn, interestBtn, contactBtn];
+
+        // Sound effects
+        var clickSfx = new Audio('sfx/clicking button.mp3');
+        var miniClickSfx = new Audio('sfx/clicking mini button.mp3');
+        clickSfx.preload = 'auto';
+        miniClickSfx.preload = 'auto';
+        var sfxEnabled = (typeof window.__sfxEnabled === 'boolean') ? window.__sfxEnabled : true;
+        window.__sfxEnabled = sfxEnabled;
+
+        var volumeImg = volumeBtn ? volumeBtn.querySelector('img') : null;
+        var VOLUME_ACTIVE_IMG = 'images/positive/volume_active.png';
+        var VOLUME_MUTED_IMG = 'images/negative/volume_mute.png';
+
+        function broadcastSfxState(){
+          var frames = [frame, framePersonal];
+          frames.forEach(function(f){
+            try{
+              if(f && f.contentWindow){
+                f.contentWindow.postMessage({ type: 'sfx-state', enabled: sfxEnabled }, '*');
+              }
+            }catch(err){}
+          });
+        }
+
+        function setGlobalSfxState(enabled){
+          sfxEnabled = !!enabled;
+          window.__sfxEnabled = sfxEnabled;
+          [clickSfx, miniClickSfx].forEach(function(sound){
+            if(!sound) return;
+            sound.pause();
+            sound.currentTime = 0;
+          });
+          updateVolumeButton();
+          broadcastSfxState();
+        }
+
+        function updateVolumeButton(){
+          if(!volumeBtn || !volumeImg) return;
+          if(sfxEnabled){
+            volumeBtn.classList.remove('volume-muted');
+            volumeImg.setAttribute('src', VOLUME_ACTIVE_IMG);
+            volumeImg.setAttribute('alt', 'volume active');
+          }else{
+            volumeBtn.classList.add('volume-muted');
+            volumeImg.setAttribute('src', VOLUME_MUTED_IMG);
+            volumeImg.setAttribute('alt', 'volume muted');
+          }
+        }
+
+        if(volumeBtn){
+          updateVolumeButton();
+          volumeBtn.addEventListener('click', function(){
+            setGlobalSfxState(!sfxEnabled);
+          });
+        }else{
+          window.__sfxEnabled = sfxEnabled;
+        }
+
+        // Keep iframes in sync with current SFX state
+        if(frame){
+          frame.addEventListener('load', function(){
+            broadcastSfxState();
+          });
+        }
+        if(framePersonal){
+          framePersonal.addEventListener('load', function(){
+            broadcastSfxState();
+          });
+        }
+        broadcastSfxState();
+
+        function playClickSfx(){
+          if(!clickSfx || !sfxEnabled) return;
+          try{
+            clickSfx.currentTime = 0;
+          }catch(err){}
+          clickSfx.play().catch(function(){});
+        }
+        function playMiniClickSfx(){
+          if(!miniClickSfx || !sfxEnabled) return;
+          try{
+            miniClickSfx.currentTime = 0;
+          }catch(err){}
+          miniClickSfx.play().catch(function(){});
+        }
+
+        function setActiveMenu(btn){
+          menuGroup.forEach(function(b){ if(b) b.classList.remove('active'); });
+          if(btn) btn.classList.add('active');
+        }
+        function setActivePersonal(btn){
+          personalGroup.forEach(function(b){ if(b) b.classList.remove('active'); });
+          if(btn) btn.classList.add('active');
+        }
+
+        function revealMenuExtras(){
+          if(workBtn) workBtn.classList.remove('is-hidden');
+          if(otherBtn) otherBtn.classList.remove('is-hidden');
+        }
+        function revealPersonalExtras(){
+          if(learningBtn) learningBtn.classList.remove('is-hidden');
+          if(interestBtn) interestBtn.classList.remove('is-hidden');
+          if(contactBtn) contactBtn.classList.remove('is-hidden');
+        }
+
+        // Open/close for menu group
+        function openOverlayMenu(src, activeBtn, revealFn){
+          if(callout) callout.style.display = 'none';
+          if(revealFn) revealFn();
+          setActiveMenu(activeBtn);
+          if(frame && src) frame.setAttribute('src', src);
+          if(overlay) overlay.classList.add('overlay--open');
+          if(overlay) overlay.setAttribute('aria-hidden','false');
+        }
+        function closeOverlayMenu(){
+          if(overlay) overlay.classList.remove('overlay--open');
+          if(overlay) overlay.setAttribute('aria-hidden','true');
+          setActiveMenu(null);
+          if(workBtn) workBtn.classList.add('is-hidden');
+          if(otherBtn) otherBtn.classList.add('is-hidden');
+        }
+
+        // Open/close for personal group
+        function openOverlayPersonal(src, activeBtn, revealFn){
+          if(callout) callout.style.display = 'none';
+          if(revealFn) revealFn();
+          setActivePersonal(activeBtn);
+          if(framePersonal && src) framePersonal.setAttribute('src', src);
+          if(overlayPersonal) overlayPersonal.classList.add('overlay--open');
+          if(overlayPersonal) overlayPersonal.setAttribute('aria-hidden','false');
+        }
+        function closeOverlayPersonal(){
+          if(overlayPersonal) overlayPersonal.classList.remove('overlay--open');
+          if(overlayPersonal) overlayPersonal.setAttribute('aria-hidden','true');
+          setActivePersonal(null);
+          if(learningBtn) learningBtn.classList.add('is-hidden');
+          if(interestBtn) interestBtn.classList.add('is-hidden');
+          if(contactBtn) contactBtn.classList.add('is-hidden');
+        }
+
+        function isOpen(win){
+          return !!(win && win.classList.contains('overlay--open'));
+        }
+
+        // Handle focus activation
+        [leftWindow, rightWindow].forEach(function(win){
+          if(!win) return;
+          win.addEventListener('mousedown', function(){
+            [leftWindow, rightWindow].forEach(function(w){
+              if(w) w.classList.remove('active');
+            });
+            win.classList.add('active');
+          });
+        });
+
+        // Helper function for button-triggered focus activation
+        function activateFocus(win){
+          [leftWindow, rightWindow].forEach(function(w){
+            if(w) w.classList.remove('active');
+          });
+          if(win) win.classList.add('active');
+        }
+
+        // Wire buttons to their respective overlay handlers
+        if(workBtn){ workBtn.addEventListener('click', function(){
+          playMiniClickSfx();
+          openOverlayMenu('subwindow_work.html', workBtn, revealMenuExtras);
+          activateFocus(rightWindow);
+        }); }
+        if(otherBtn){ otherBtn.addEventListener('click', function(){
+          playMiniClickSfx();
+          openOverlayMenu('subwindow_other.html', otherBtn, revealMenuExtras);
+          activateFocus(rightWindow);
+        }); }
+
+        if(learningBtn){ learningBtn.addEventListener('click', function(){
+          playMiniClickSfx();
+          openOverlayPersonal('subwindow_learning.html', learningBtn, revealPersonalExtras);
+          activateFocus(leftWindow);
+        }); }
+        if(interestBtn){ interestBtn.addEventListener('click', function(){
+          playMiniClickSfx();
+          openOverlayPersonal('subwindow_interest.html', interestBtn, revealPersonalExtras);
+          activateFocus(leftWindow);
+        }); }
+        if(contactBtn){ contactBtn.addEventListener('click', function(){
+          playMiniClickSfx();
+          openOverlayPersonal('subwindow_contact.html', contactBtn, revealPersonalExtras);
+          activateFocus(leftWindow);
+        }); }
+
+        // Generic toggle helper that allows both windows to stay open
+        function toggleWindow(win, btn, openFn, closeFn){
+          if(!win || !btn) return;
+          if(isOpen(win)){
+            closeFn();
+            btn.classList.remove('active');
+          } else {
+            openFn();
+            btn.classList.add('active');
+            activateFocus(win);
+          }
+        }
+
+        // Map: accountBtn activates leftWindow; menuBtn activates rightWindow
+        if(menuBtn){
+          menuBtn.addEventListener('click', function(){
+            playClickSfx();
+            toggleWindow(
+              rightWindow,
+              menuBtn,
+              function(){ openOverlayMenu('subwindow_menu.html', menuBtn, revealMenuExtras); },
+              closeOverlayMenu
+            );
+          });
+        }
+        if(accountBtn){
+          accountBtn.addEventListener('click', function(){
+            playClickSfx();
+            toggleWindow(
+              leftWindow,
+              accountBtn,
+              function(){ openOverlayPersonal('subwindow_account.html', accountBtn, revealPersonalExtras); },
+              closeOverlayPersonal
+            );
+          });
+        }
+
+        // Listen for close messages from iframes and close the corresponding overlay only
+        window.addEventListener('message', function(e){
+          if(!e) return;
+          if(e.data === 'close-subwindow'){
+            try{
+              if(frame && e.source === frame.contentWindow){
+                closeOverlayMenu();
+                return;
+              }
+            }catch(err){}
+            try{
+              if(framePersonal && e.source === framePersonal.contentWindow){
+                closeOverlayPersonal();
+                return;
+              }
+            }catch(err){}
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

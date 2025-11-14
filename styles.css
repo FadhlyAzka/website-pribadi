@@ -1,0 +1,209 @@
+:root {
+  --bg: #f7eff7; /* light lavender/pink canvas */
+  --ink: #2b2626; /* near-black text */
+  --rail-sun: #f3ea72; /* pastel yellow */
+  --rail-main: #f2ccff; /* pastel pink-lilac */
+  --rail-hidden: #e2c7ff; /* pastel lilac */
+  --rail-moon: #9aaefc; /* soft periwinkle blue */
+  --radius-xl: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--ink);
+}
+
+.canvas {
+  min-height: 100vh;
+  background: var(--bg);
+  border-radius: 24px;
+  margin: 8px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-rail {
+  position: absolute;
+  top: 18px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+.rail-btn {
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 8px 20px rgba(0,0,0,.06) inset;
+}
+
+.rail-btn-small {
+    width: 47px;
+    height: 47px;
+    border: 0;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 8px 20px rgba(0,0,0,.06) inset;
+}
+
+.rail-btn svg { transform: translateY(1px); }
+
+.rail-btn--sun { background: var(--rail-sun); }
+.rail-btn--volume { background: var(--rail-sun); transition: background-color .2s ease; }
+.rail-btn--volume.volume-muted { background: var(--rail-moon); }
+.rail-btn--menu { background: var(--rail-main); }
+.rail-btn--work { background: var(--rail-hidden); }
+.rail-btn--other { background: var(--rail-hidden); }
+.rail-btn--account { background: var(--rail-main); }
+.rail-btn--learning { background: var(--rail-hidden); }
+.rail-btn--interest { background: var(--rail-hidden); }
+.rail-btn--contact { background: var(--rail-hidden); }
+.rail-btn--menu.active {
+  background: linear-gradient(90deg, #F1C6FF 0%, #FFB566 100%);
+}
+.rail-btn--work.active {
+  background: linear-gradient(90deg, #C3B1FF 0%, #FFB566 100%);
+}
+.rail-btn--other.active {
+  background: linear-gradient(90deg, #C3B1FF 0%, #FFB566 100%);
+}
+.rail-btn--account.active {
+  background: linear-gradient(90deg, #F1C6FF 0%, #FFB566 100%);
+}
+.rail-btn--learning.active {
+  background: linear-gradient(90deg, #C3B1FF 0%, #FFB566 100%);
+}
+.rail-btn--interest.active {
+  background: linear-gradient(90deg, #C3B1FF 0%, #FFB566 100%);
+}
+.rail-btn--contact.active {
+  background: linear-gradient(90deg, #C3B1FF 0%, #FFB566 100%);
+}
+
+.rail-btn-image {
+  width: 24px;
+  height: 24px;
+}   
+
+.is-hidden { display: none; }
+
+.callout {
+  position: absolute;
+  left: 70px; /* beside the menu button */
+  top: 80px;
+  user-select: none;
+}
+
+.callout-image {
+  width: 160px;
+  height: 49px;
+}
+
+.hero {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(80px, 12vh, 140px) 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: center;
+}
+
+.eyebrow {
+  font-family: "Sanchez", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(26px, 3.6vw, 44px);
+  margin: 0 0 8px 0;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.title {
+  font-family: "Rowdies", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  font-weight: 900;
+  font-size: clamp(58px, 8.8vw, 92px);
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-align: center;
+}
+
+/* Responsive tweaks */
+@media (max-width: 520px) {
+  .left-rail { top: 12px; left: 10px; gap: 10px; }
+  .rail-btn { width: 44px; height: 44px; border-radius: 10px; }
+  .callout { left: 56px; top: 44px; }
+}
+
+/* Overlay and sub-window */
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 40;
+}
+.overlay--open { opacity: 1; pointer-events: none; }
+.overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  pointer-events: none;
+}
+.overlay-body {
+  position: relative;
+  width: min(550px, 92vw);
+  height: min(400px, 86vh);
+  border-radius: 0;
+  overflow: hidden;
+  pointer-events: auto; /* capture interactions while allowing outside clicks to pass */
+}
+.subwindow-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: transparent; /* allow transparent areas inside iframe */
+}
+.overlay.active {
+  border-color: #6b21a8;
+  box-shadow: 160px rgba(107,33,168,0.6);
+  z-index: 50;
+}
+/* Fixed positions for left/right windows */
+.overlay.left-side .overlay-body {
+  position: fixed;
+  left: 200px;
+  top: calc(50% - 200px);
+}
+.overlay.right-side .overlay-body {
+  position: fixed;
+  right: 200px;
+  top: calc(50% - 200px);
+}

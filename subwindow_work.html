@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Work Equipment — Subwindow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Boldonse&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Darker+Grotesque:wght@300..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Rowdies:wght@300;400;700&family=Sanchez:ital@0;1&family=Savate:ital,wght@0,200..900;1,200..900&family=Sue+Ellen+Francisco&display=swap" rel="stylesheet"> 
+    <style>
+      :root{ --ink:#2b2626; --muted:#7a7670; --bar:#c8c8c8; --paper:#f4ecd2; }
+      *{ box-sizing:border-box; }
+      html,body{ height:100%; overflow:hidden; }
+      body{ margin:0; background:transparent; color:var(--ink); font-family: "Merriweather", Georgia, serif; }
+      .window{ 
+        height:100%; display:flex; flex-direction:column; border:2px solid #bdbdbd; background:var(--paper); overflow:visible; transform: translateY(30px); 
+      }
+      .titlebar{ position:relative; display:flex; align-items:center; justify-content:flex-start; background:var(--bar); padding:0 12px; width:550px; height:35px; }
+      .titlebar h1{ position:absolute; left:10px; top:-22px; margin:0; font-family:"Sue Ellen Francisco", system-ui; font-size:40px; font-weight:60; line-height:1; z-index:2; }
+      
+      .close-btn{ width:35px; height:35px; border:0; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; position:absolute; right:4px; top:-7px; }
+      .close-btn img{ width:18px; height:18px; display:block; }
+      .content{ padding:36px 44px 44px; overflow:auto; }
+
+      .section{ margin-top:28px; }
+      .section h3{ font-family:"Cormorant Garamond", system-ui; letter-spacing:1px; font-size:16px; margin:0 0 8px; }
+      p{ margin:6px 0; font-size:12px; color:#5a5550; }
+      ul{ margin:8px 0 0 22px; font-size:12px;padding:0; color:#5a5550; }
+      .chip{ display:inline-block; padding:10px 16px; background:#fff; border-radius:14px; margin:8px 8px 0 0; font-family:"Darker Grotesque", system-ui; font-size:20px; }
+    </style>
+  </head>
+  <body>
+    <div class="window">
+      <div class="titlebar">
+        <h1>Work Equipment</h1>
+        <button class="close-btn" aria-label="Close"><img src="images/positive/exit.png" alt="Close" /></button>
+      </div>
+      <div class="content">
+        <p><b>Catatan</b> mengenai beberapa <i>software</i> yang sering digunakan…</p>
+        <ul>
+          <li>Perkuliahan hanya mengenalkan, seringnya tanpa perincian penggunaan</li>
+          <li>Belajar otodidak sesuai dengan kebutuhan analisis</li>
+        </ul>
+
+        <div class="section">
+          <h3>BAHASA PEMROGRAMAN</h3>
+          <p>Memahami cara kerja bahasa Python dan R tingkat menengah</p>
+          <p>Sedang mengasah kemampuan HTML/CSS, sedikit PHP</p>
+          <div>
+              <span class="chip">Python</span>
+              <span class="chip">R</span>
+              <span class="chip">HTML/CSS</span>
+            </div>
+        </div>
+        
+        <div class="section">
+          <h3>APLIKASI STATISTIKA</h3>
+          <p>Sebagian besar dengan tingkat kemahiran sedang, yaitu M. Excel, SPSS, Minitab, Eviews 13, dan Power BI</p>
+          <p>Beberapa kasus ketika membutuhkan software lebih advanced, diperlukan waktu untuk belajar</p>
+          <div>
+            <span class="chip">Microsoft Excel</span>
+            <span class="chip">SPSS</span>
+            <span class="chip">Minitab</span>
+            <span class="chip">EViews13</span>
+            <span class="chip">Microsoft Power BI</span>
+          </div>
+        </div>
+        
+        <div class="section">
+          <h3>TYPESETTING</h3>
+          <p>Memahami cara kerja typesetting untuk format dokumen yang terstruktur profesional</p>
+          <div>
+              <span class="chip">LaTeX</span>
+            </div>
+        </div>
+
+      </div>
+    </div>
+    <script src="close.js"></script>
+  </body>
+</html>
